@@ -1,0 +1,263 @@
+<!doctype html>
+<html>
+<style media="screen" type="text/css">
+form {
+  /* Just to center the form on the page */
+  margin: 0 auto;
+  width: 880px;
+  /* To see the outline of the form */
+  padding: 1em;
+  border: 1px solid #CCC;
+  border-radius: 1em;
+}
+
+form div + div {
+  margin-top: 1em;
+}
+
+label {
+  /* To make sure that all labels have the same size and are properly aligned */
+  display: inline-block;
+  /*width: 90px;*/
+  text-align: right;
+}
+
+input, textarea {
+  /* To make sure that all text fields have the same font settings
+     By default, textareas have a monospace font */
+  font: 1em sans-serif;
+
+  /* To give the same size to all text fields */
+  width: 800px;
+  box-sizing: border-box;
+
+  /* To harmonize the look & feel of text field border */
+  border: 1px solid #999;
+}
+
+input:focus, textarea:focus {
+  /* To give a little highlight on active elements */
+  border-color: #000;
+}
+
+textarea {
+  /* To properly align multiline text fields with their labels */
+  vertical-align: top;
+
+  /* To give enough room to type some text */
+  height: 5em;
+}
+
+.button {
+  /* To position the buttons to the same position of the text fields */
+  padding-left: 360px; /* same size as the label elements */
+}
+
+button {
+  /* This extra margin represent roughly the same space as the space
+     between the labels and their text fields */
+  margin-left: .5em;
+}
+h1
+{
+  font-size: 48px;
+  text-shadow: -1px -1px #f00, 1px 1px #a00, -3px 0 4px #000;
+  font-family:"Segoe print", Arial, Helvetica, sans-serif;
+  color: #dd0000;
+  padding:24px 0 0 0;
+  margin:16px auto;
+  font-weight:lighter;
+  -moz-box-shadow:none;  
+  -webkit-box-shadow: none;  
+  box-shadow:none;  
+  text-align:center;
+  display:block;
+  min-height:60px;
+  min-width:880px;
+  max-height:172px;
+  max-width:880px;  
+}
+div.content {
+  margin: 0 auto;
+  width: 880px;
+  /* To see the outline of the form */
+  padding: 1em;
+  border: 1px solid #CCC;
+  border-radius: 1em;
+  font-family: Calibri, Arial, "Lucida Grande", Tahoma, Verdana, sans-serif;
+  font-size:18px;
+}
+pre.logo {
+  margin: 0;
+  display: inline;
+  font-size:15px;  
+}
+pre.content {
+  font-size:15px;
+}
+</style>
+<script>
+function browse() {
+	var href=window.location.href;
+	var url2go=href.substring(0,href.lastIndexOf("/")+1)+ "JTunnel?page64=";
+	var urlTyped = document.getElementById("URL").value;
+	if(urlTyped.indexOf("http") == -1) {
+		urlTyped = "http:\/\/" + urlTyped;
+	}
+	urlTyped = btoa(urlTyped);
+	document.getElementById("url_form").action=url2go+urlTyped;
+	document.getElementById("url_form").submit();
+}
+function download() {
+	var href=window.location.href;
+	var url2go=href.substring(0,href.lastIndexOf("/")+1)+ "JTunnel?fake64=";
+	var urlTyped = document.getElementById("URL").value;
+	if(urlTyped.indexOf("http") == -1) {
+		urlTyped = "http:\/\/" + urlTyped;
+	}
+	urlTyped = btoa(urlTyped);
+	document.getElementById("url_form").action=url2go+urlTyped;
+	document.getElementById("url_form").submit();
+}
+// Show / Hide help
+function Hide (addr) { document.getElementById(addr).style.display = "none"; }
+function Show (addr) { document.getElementById(addr).style.display = "block";  }
+function toggle(anId) {
+  if (document.getElementById(anId).style.display == "none") {
+    Show(anId);
+  } else {
+    Hide(anId);
+  }
+}
+window.onload = function () { Hide("help");  };
+</script>
+<head>
+	<title>JTunnel</title>
+</head>
+<body>
+<!-- <h1>JTunnel</h1> -->
+<table width="100%" align="center">
+  <tr>
+    <td align="center">
+      <pre class="logo" style="color: red">
+   __     ______   __  __     __   __     __   __     ______     __       
+  /\ \   /\__  _\ /\ \/\ \   /\ "-.\ \   /\ "-.\ \   /\  ___\   /\ \      
+ _\_\ \  \/_/\ \/ \ \ \_\ \  \ \ \-.  \  \ \ \-.  \  \ \  __\   \ \ \____ 
+/\_____\    \ \_\  \ \_____\  \ \_\\"\_\  \ \_\\"\_\  \ \_____\  \ \_____\
+\/_____/     \/_/   \/_____/   \/_/ \/_/   \/_/ \/_/   \/_____/   \/_____/
+</pre>
+<pre class="logo">
+                                                                          v0.2b
+</pre>
+    </td>
+  </tr>
+</table>
+<form id="url_form" action="" method="post">
+  <div>
+    <label>URL :</label>
+    <input type="text" id="URL" name="URL">
+  </div>
+  <div class="button">
+  <button type="submit" name="Browse" onclick="browse()">Browse</button>
+  <button type="submit" name="Download" onclick="download()">Download</button>
+  <button type="button" onclick="toggle('help');">Help ?</button>
+</div>
+</form>
+<br>
+<!--   <div class="content" id="help" style="visibility: : hidden;"> -->
+<div class="content" id="help" style="display: none;">
+  <p>JTunnel is a remote downloader using several features to bypass proxy/fw filtering. Files downloaded are in a "swabbed" format with a unique filename : ooze.swab</p>
+  To unswab downloaded file you can either :
+<ul>
+<li>
+  Under Linux :
+  <pre class="content">dd if=ooze.swab of="original filename" conv=swab</pre>
+</li>
+<li>
+  With Java :
+  <ul>
+    <li>
+      Use the following pre-compiled jar file : <a href="Swab.jar">Swab.jar</a>
+    </li>
+    Or
+    <li>Cut and paste the following code on <a href="https://www.compilejava.net/" target="_blank">https://www.compilejava.net/</a>
+    </li>
+    <li>
+      Click on "Download Zip"
+    </li>
+    <li>
+      Unzip the downloaed file
+    </li>
+    <li>
+      Use the Swab.jar file :
+      <pre class="content">
+        java -jar Swab.jar ooze.swab "original filename"
+      </pre>
+    </li>
+  </ul>
+  <pre class="content">
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
+
+public class Swab {
+  private static final int BUFFER_SIZE = 4096; // 4KB
+
+  public static void main(String[] args) {
+    if (args.length &lt; 2) {
+      System.out.println("Please provide input and output files");
+      System.exit(0);
+    }
+
+    String inputFile = args[0];
+    String outputFile = args[1];
+    try (
+        InputStream inputStream = new FileInputStream(inputFile);
+        OutputStream outputStream = new FileOutputStream(outputFile);
+    ) {
+      byte[] buffer = new byte[BUFFER_SIZE];
+      int last_byte;
+      int bytesRead;
+      while ((bytesRead = inputStream.read(buffer)) != -1) {
+        if(bytesRead % 2 == 0) {
+          outputStream.write(swab(buffer,bytesRead), 0, bytesRead);
+        } else {
+          outputStream.write(swab(buffer,bytesRead-1), 0, bytesRead-1);
+          last_byte = inputStream.read();
+          if(last_byte != -1)
+            outputStream.write((byte)last_byte);
+          outputStream.write(buffer[bytesRead-1]);
+        }
+      }
+
+    } catch (IOException ex) {
+      ex.printStackTrace();
+    }
+  }
+
+  static public byte[] swab(byte[] buffer, int bytesRead) {
+    byte[] buffer_swabbed = new byte[BUFFER_SIZE];
+    // Swab bytes
+    if(bytesRead % 2 == 0) {
+      for(int i=0;i&lt;bytesRead;i=i+2) {
+        buffer_swabbed[i]=buffer[i+1];
+        buffer_swabbed[i+1]=buffer[i];
+      }
+    } else {
+      for(int i=0;i&lt;bytesRead-1;i=i+2) {
+        buffer_swabbed[i]=buffer[i+1];
+        buffer_swabbed[i+1]=buffer[i];
+      }
+      buffer_swabbed[bytesRead-1] = buffer[bytesRead-1];
+    }
+    return buffer_swabbed;
+  }
+}
+  </pre>
+</li>
+</ul>
+
+</div>
+</body>
