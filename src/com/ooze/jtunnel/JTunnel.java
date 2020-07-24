@@ -112,7 +112,12 @@ public class JTunnel extends HttpServlet {
 			String contentType = entity.getContentType().getValue();
 			if(fake) {
 				response.setContentType("application/octet-stream");
-				response.setHeader("Content-Disposition", "filename=\"ooze.swab\"");
+				if(URL.lastIndexOf('/') != -1 && URL.lastIndexOf('/') > 8) {
+					String filename = URL.substring(URL.lastIndexOf('/') + 1) + ".swab";
+					response.setHeader("Content-Disposition", "filename=\""+ filename + "\"");
+				} else {
+					response.setHeader("Content-Disposition", "filename=\"ooze.swab\"");	
+				}
 			} else {
 				response.setContentType(contentType);
 				if(contentType.indexOf("charset=") !=-1)
